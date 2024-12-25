@@ -15,7 +15,7 @@
   <name>libs</name>
   <url>http://maven.apache.org</url>
   <modules>
-    <module>keycloak-security-starter</module>
+    <module>common</module>
   </modules>
 
   <properties>

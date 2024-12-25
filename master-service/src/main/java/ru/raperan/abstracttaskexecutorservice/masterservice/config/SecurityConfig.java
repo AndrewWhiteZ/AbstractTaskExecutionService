@@ -1,4 +1,4 @@
-package ru.raperan.abstracttaskexecutorservice.masterservice;
+package ru.raperan.abstracttaskexecutorservice.masterservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
