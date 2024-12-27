@@ -3,6 +3,7 @@ package ru.raperan.abstracttaskexecutorservice.masterservice.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ru.raperan.abstracttaskexecutorservice.common.enums.Status;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

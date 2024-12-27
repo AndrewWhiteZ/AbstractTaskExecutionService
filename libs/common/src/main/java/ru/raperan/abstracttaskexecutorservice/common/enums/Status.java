@@ -1,4 +1,4 @@
-package ru.raperan.abstracttaskexecutorservice.masterservice.entity;
+package ru.raperan.abstracttaskexecutorservice.common.enums;
 
 public enum Status {
 
