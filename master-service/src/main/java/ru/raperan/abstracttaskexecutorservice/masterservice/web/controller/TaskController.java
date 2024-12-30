@@ -1,5 +1,6 @@
 package ru.raperan.abstracttaskexecutorservice.masterservice.web.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class TaskController {
     /**
      * Создать задачу
      */
+    @Operation(summary = "Создать новую задачу", description = "Создает задачу с описанием ttl и шагов выполнения")
     @PostMapping("/tasks")
     public ItemResponse<TaskApiDto> createTask(@Valid @RequestBody CreateTaskRequest request) {
         return new ItemResponse<>(taskService.createTask(request));
@@ -32,6 +34,7 @@ public class TaskController {
     /**
      * Получить список задач
      */
+    @Operation(summary = "Получить список всех созданных задач", description = "Возвращает список всех созданных ранее задач")
     @GetMapping("/tasks")
     public ListResponse<TaskApiDto> getTasks() {
         return new ListResponse<>(taskService.getTasks());
@@ -41,8 +44,9 @@ public class TaskController {
      * Получить информацию о задаче
      * @param taskId UUID задачи
      */
+    @Operation(summary = "Получить задачу по ID", description = "Возвращает задачу по её UUID")
     @GetMapping("/tasks/{taskId}")
-    public ItemResponse<TaskApiDto> getTaskById(@PathVariable UUID taskId) {
+    public ItemResponse<TaskApiDto> getTaskById(@PathVariable("taskId") UUID taskId) {
         return new ItemResponse<>(taskService.getTaskById(taskId));
     }
 
@@ -50,8 +54,9 @@ public class TaskController {
      * Выполнить задачу повторно
      * @param taskId UUID задачи
      */
+    @Operation(summary = "Повторить задачу по ID", description = "Находит ранее созданую задачу по её UUID и создает её копию для выполнения")
     @PostMapping("/tasks/{taskId}")
-    public ItemResponse<TaskApiDto> restartTask(@PathVariable UUID taskId) {
+    public ItemResponse<TaskApiDto> restartTask(@PathVariable("taskId") UUID taskId) {
         return new ItemResponse<>(taskService.restartTask(taskId));
     }
 
