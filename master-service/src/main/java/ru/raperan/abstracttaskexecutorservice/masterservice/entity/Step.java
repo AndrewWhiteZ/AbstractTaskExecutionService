@@ -1,6 +1,7 @@
 package ru.raperan.abstracttaskexecutorservice.masterservice.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import ru.raperan.abstracttaskexecutorservice.common.enums.Status;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "step")
 public class Step {
 
@@ -18,6 +20,7 @@ public class Step {
     private String name;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private Status status;
 
     @Column(name = "result")

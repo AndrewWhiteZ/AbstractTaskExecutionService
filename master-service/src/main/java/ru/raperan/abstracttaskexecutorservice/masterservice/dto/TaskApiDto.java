@@ -1,16 +1,18 @@
 package ru.raperan.abstracttaskexecutorservice.masterservice.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
-public class TaskDto {
+@Builder
+public class TaskApiDto {
 
     private UUID id;
     private String payload;
     private Long ttl;
-    private List<StepDto> steps;
+    private Set<StepApiDto> steps;
 
 }

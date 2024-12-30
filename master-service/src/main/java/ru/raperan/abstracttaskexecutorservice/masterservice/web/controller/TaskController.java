@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
-import ru.raperan.abstracttaskexecutorservice.masterservice.dto.TaskDto;
+import ru.raperan.abstracttaskexecutorservice.masterservice.dto.TaskApiDto;
 import ru.raperan.abstracttaskexecutorservice.masterservice.service.TaskService;
 import ru.raperan.abstracttaskexecutorservice.masterservice.web.annotation.ApiV1;
 import ru.raperan.abstracttaskexecutorservice.masterservice.web.request.CreateTaskRequest;
@@ -25,7 +25,7 @@ public class TaskController {
      * Создать задачу
      */
     @PostMapping("/tasks")
-    public ItemResponse<TaskDto> createTask(@Valid @RequestBody CreateTaskRequest request) {
+    public ItemResponse<TaskApiDto> createTask(@Valid @RequestBody CreateTaskRequest request) {
         return new ItemResponse<>(taskService.createTask(request));
     }
 
@@ -33,7 +33,7 @@ public class TaskController {
      * Получить список задач
      */
     @GetMapping("/tasks")
-    public ListResponse<TaskDto> getTasks() {
+    public ListResponse<TaskApiDto> getTasks() {
         return new ListResponse<>(taskService.getTasks());
     }
 
@@ -42,7 +42,7 @@ public class TaskController {
      * @param taskId UUID задачи
      */
     @GetMapping("/tasks/{taskId}")
-    public ItemResponse<TaskDto> getTaskById(@PathVariable UUID taskId) {
+    public ItemResponse<TaskApiDto> getTaskById(@PathVariable UUID taskId) {
         return new ItemResponse<>(taskService.getTaskById(taskId));
     }
 
@@ -51,7 +51,7 @@ public class TaskController {
      * @param taskId UUID задачи
      */
     @PostMapping("/tasks/{taskId}")
-    public ItemResponse<TaskDto> restartTask(@PathVariable UUID taskId) {
+    public ItemResponse<TaskApiDto> restartTask(@PathVariable UUID taskId) {
         return new ItemResponse<>(taskService.restartTask(taskId));
     }
 
