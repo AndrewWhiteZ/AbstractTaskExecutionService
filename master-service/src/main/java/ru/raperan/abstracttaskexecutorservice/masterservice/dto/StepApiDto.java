@@ -13,15 +13,10 @@ public class StepApiDto {
     private String name;
     private String status;
     private String payload;
-    private String result;
     private LocalDateTime startTime;
 
     public String getPayload() {
         return (payload == null) ? "" : payload;
-    }
-
-    public String getResult() {
-        return (result == null) ? "" : result;
     }
 
     public LocalDateTime getStartTime() {

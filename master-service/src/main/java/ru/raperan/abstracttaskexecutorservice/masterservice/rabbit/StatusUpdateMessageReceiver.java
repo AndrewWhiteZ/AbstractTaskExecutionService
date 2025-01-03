@@ -14,7 +14,7 @@ import ru.raperan.abstracttaskexecutorservice.masterservice.service.StepService;
 @Slf4j
 public class StatusUpdateMessageReceiver {
 
-    private StepService stepService;
+    private final StepService stepService;
 
     @RabbitListener(queues = RabbitmqConst.UPDATE_STATUS_QUEUE_NAME)
     public void receive(@Payload StatusUpdateDto dto) {

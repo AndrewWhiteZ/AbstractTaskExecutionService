@@ -16,6 +16,8 @@ public class TaskDto {
 
     private UUID id;
 
+    private Long ttl;
+
     private List<StepDto> steps;
 
 }

@@ -1,0 +1,2 @@
+ALTER TABLE step DROP CONSTRAINT pk_step;
+ALTER TABLE step ADD CONSTRAINT step_pk PRIMARY KEY (id,status);

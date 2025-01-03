@@ -3,13 +3,16 @@ package ru.raperan.abstracttaskexecutorservice.workerservice.executor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import ru.raperan.abstracttaskexecutorservice.common.dto.PayloadDto;
 import ru.raperan.abstracttaskexecutorservice.common.dto.StatusUpdateDto;
 import ru.raperan.abstracttaskexecutorservice.common.dto.StepDto;
 import ru.raperan.abstracttaskexecutorservice.common.dto.TaskDto;
 import ru.raperan.abstracttaskexecutorservice.common.enums.Status;
 import ru.raperan.abstracttaskexecutorservice.workerservice.rabbit.StatusUpdateSender;
 
+import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
@@ -29,25 +32,44 @@ public class TaskExecutor {
     }
 
     private void executeTaskInternal(TaskDto task) {
-        StringBuilder resultBuilder = new StringBuilder();
         log.info("Начинается выполняется задачи \"{}\"", task.getId());
 
-        for (StepDto step : task.getSteps()) {
+        for (int i = 0; i < task.getSteps().size(); i++) {
+            StringBuilder resultBuilder = new StringBuilder();
+            StepDto step = task.getSteps().get(i);
             log.info("Начинается выполняется шага \"{}\" задачи \"{}\"", step.getName(), task.getId());
+            //TODO добавить проверку на то не протухла ли задача
 
-            trySendStatusUpdate(new StatusUpdateDto(task.getId(), step.getId(),
-                                                    Status.PROCESSING, null));
+            try {
+                Thread.sleep(10L);
+            } catch (InterruptedException ignored) {
+
+            }
+
+            trySendStatusUpdate(StatusUpdateDto.updateNow(task.getId(), step.getId(), step.getName(),
+                                                    Status.PROCESSING, step.getPayload().getBody() ));
 
             var payload = step.getPayload().getBody();
+            resultBuilder.append(payload);
             try {
-                Thread.sleep(payload.length() * 1000L);
+                Thread.sleep(payload.length() * 500L);
             } catch (InterruptedException e) {
+//                resultBuilder.append(e.getMessage());
+
+                trySendStatusUpdate(StatusUpdateDto.updateNow(task.getId(), step.getId(), step.getName(),
+                        Status.ERROR, resultBuilder.toString()));
                 return;
             }
-            resultBuilder.append(payload);
 
-            trySendStatusUpdate(new StatusUpdateDto(task.getId(), step.getId(),
+            resultBuilder.append(String.format("_%s", step.getName()));
+            trySendStatusUpdate(StatusUpdateDto.updateNow(task.getId(), step.getId(), step.getName(),
                                                     Status.FINISHED, resultBuilder.toString()));
+            if (  i+1 < task.getSteps().size() ) {
+                task.getSteps().get(i+1).setPayload(PayloadDto.builder()
+                                .body(resultBuilder.toString())
+                        .build());
+
+            }
 
         }
 

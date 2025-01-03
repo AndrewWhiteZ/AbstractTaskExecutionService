@@ -3,6 +3,8 @@ package ru.raperan.abstracttaskexecutorservice.masterservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,23 +24,16 @@ public class Task {
     @Column(name = "ttl")
     private Long ttl;
 
-    @OneToMany(mappedBy = "task", orphanRemoval = true, cascade = CascadeType.MERGE)
-    private Set<Step> steps;
+    @OneToMany(mappedBy = "task", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    private List<Step> steps;
 
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    public void addSteps(Set<Step> stepsList) {
-        this.steps.clear();
-        stepsList.forEach(step -> this.steps.add(
-            Step.builder()
-                .task(this)
-                .name(step.getName())
-                .build()
-            )
-        );
+    public void addSteps(Collection<Step> stepsList) {
+        stepsList.stream().distinct().forEach(step -> step.setTask(this));
     }
 
 }

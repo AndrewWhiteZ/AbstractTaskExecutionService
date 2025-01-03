@@ -19,34 +19,21 @@ public class Step {
     @Column(name = "name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private Status status;
-
-    @Column(name = "result")
-    private Result result;
-
     @Column(name = "payload")
     private Payload payload;
 
     @Column(name = "start_time")
     private LocalDateTime startTime;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne()
     @JoinColumn(name = "task_id")
     private Task task;
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @EmbeddedId
+    StepId stepId;
 
-    public String getPayload() {
-        return (payload == null) ? "" : Payload.builder().body(payload.body).toString();
-    }
-
-    public String getResult() {
-        return (result == null) ? "" : Payload.builder().body(result.body).toString();
+    public String getPayloadAsString() {
+        return (payload == null) ? "" : payload.body;
     }
 
     public LocalDateTime getStartTime() {
