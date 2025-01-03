@@ -41,4 +41,16 @@ public class Step {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    public String getPayload() {
+        return (payload == null) ? "" : Payload.builder().body(payload.body).toString();
+    }
+
+    public String getResult() {
+        return (result == null) ? "" : Payload.builder().body(result.body).toString();
+    }
+
+    public LocalDateTime getStartTime() {
+        return (startTime == null) ? LocalDateTime.of(1970, 1, 1, 0, 0, 0) : startTime;
+    }
+
 }

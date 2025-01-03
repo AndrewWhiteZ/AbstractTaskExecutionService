@@ -1,9 +1,7 @@
 package ru.raperan.abstracttaskexecutorservice.masterservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -13,6 +11,8 @@ import java.util.UUID;
 @Setter
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "task")
 public class Task {
 

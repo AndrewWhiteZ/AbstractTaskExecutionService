@@ -16,7 +16,7 @@ public class StatusUpdateMessageReceiver {
 
     private StepService stepService;
 
-    @RabbitListener(queues = RabbitmqConst.ADD_TASK_QUEUE_NAME)
+    @RabbitListener(queues = RabbitmqConst.UPDATE_STATUS_QUEUE_NAME)
     public void receive(@Payload StatusUpdateDto dto) {
         log.info("Получено сообщение: {}", dto);
         stepService.updateStatus(dto);
