@@ -17,7 +17,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("keycloak.raperan.ru")).permitAll()
+//                        .requestMatchers(new AntPathRequestMatcher("keycloak.raperan.ru")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();

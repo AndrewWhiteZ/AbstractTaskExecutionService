@@ -1,9 +1,7 @@
 package ru.raperan.abstracttaskexecutorservice.masterservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import ru.raperan.abstracttaskexecutorservice.common.enums.Status;
 
 import java.time.LocalDateTime;
@@ -13,7 +11,9 @@ import java.util.UUID;
 @Setter
 @Entity
 @Builder
+@NoArgsConstructor
 @Table(name = "step")
+@AllArgsConstructor
 public class Step {
 
     @Column(name = "name")

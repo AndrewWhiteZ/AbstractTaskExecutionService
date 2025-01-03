@@ -1,5 +1,6 @@
 package ru.raperan.abstracttaskexecutorservice.masterservice.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.raperan.abstracttaskexecutorservice.common.dto.TaskDto;
 import ru.raperan.abstracttaskexecutorservice.masterservice.dto.TaskApiDto;
@@ -9,9 +10,10 @@ import ru.raperan.abstracttaskexecutorservice.masterservice.web.request.CreateTa
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class TaskMapper {
 
-    private StepMapper stepMapper;
+    private final StepMapper stepMapper;
 
     public Task mapRequestToEntity(CreateTaskRequest request) {
         return Task.builder()
