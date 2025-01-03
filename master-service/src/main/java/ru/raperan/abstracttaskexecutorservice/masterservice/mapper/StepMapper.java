@@ -19,7 +19,7 @@ public class StepMapper {
         return StepDto.builder()
                 .id(step.getId())
                 .name(step.getName())
-                .payload(PayloadDto.builder().body(step.getPayload().toString()).build())
+                .payload(PayloadDto.builder().body(step.getPayload()).build())
                 .build();
     }
 
@@ -27,8 +27,8 @@ public class StepMapper {
         return StepApiDto.builder()
                 .name(step.getName())
                 .status(String.valueOf(step.getStatus()))
-                .payload(step.getPayload().toString())
-                .result(step.getResult().toString())
+                .payload(step.getPayload())
+                .result(step.getResult())
                 .startTime(step.getStartTime())
                 .build();
 

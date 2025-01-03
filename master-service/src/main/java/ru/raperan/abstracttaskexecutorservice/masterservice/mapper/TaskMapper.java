@@ -19,7 +19,7 @@ public class TaskMapper {
         return Task.builder()
                 .ttl(request.getTtl())
                 .steps(request.getSteps().stream().map(
-                        step -> stepMapper.mapRequestToEntity(step)
+                        stepMapper::mapRequestToEntity
                 ).collect(Collectors.toSet()))
                 .build();
     }
@@ -28,7 +28,7 @@ public class TaskMapper {
         return TaskDto.builder()
                 .id(task.getId())
                 .steps(task.getSteps().stream().map(
-                        step -> stepMapper.mapEntityToDto(step)
+                        stepMapper::mapEntityToDto
                 ).collect(Collectors.toList()))
                 .build();
     }
@@ -38,7 +38,7 @@ public class TaskMapper {
                 .id(task.getId())
                 .ttl(task.getTtl())
                 .steps(task.getSteps().stream().map(
-                        step -> stepMapper.mapEntityToApiDto(step)).collect(Collectors.toSet())
+                        stepMapper::mapEntityToApiDto).collect(Collectors.toSet())
                 )
                 .build();
     }

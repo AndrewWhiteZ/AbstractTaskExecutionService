@@ -32,7 +32,7 @@ public class Step {
     @Column(name = "start_time")
     private LocalDateTime startTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "task_id")
     private Task task;
 

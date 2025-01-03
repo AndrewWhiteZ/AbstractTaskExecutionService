@@ -23,7 +23,7 @@ public class Task {
     @Column(name = "ttl")
     private Long ttl;
 
-    @OneToMany(mappedBy = "task", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "task", orphanRemoval = true, cascade = CascadeType.MERGE)
     private Set<Step> steps;
 
     @Id
@@ -32,8 +32,14 @@ public class Task {
     private UUID id;
 
     public void addSteps(Set<Step> stepsList) {
-        this.steps = stepsList;
-        this.steps.forEach(step -> step.setTask(this));
+        stepsList.forEach(step -> this.steps.add(
+            Step.builder()
+                .task(this)
+                .name(step.getName())
+                .id(UUID.randomUUID())
+                .build()
+            )
+        );
     }
 
 }
