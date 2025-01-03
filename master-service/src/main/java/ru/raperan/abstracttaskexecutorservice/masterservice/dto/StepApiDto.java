@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StepApiDto {
 
     private String name;
