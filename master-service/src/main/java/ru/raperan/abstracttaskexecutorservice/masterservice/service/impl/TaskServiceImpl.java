@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import ru.raperan.abstracttaskexecutorservice.common.enums.Status;
 import ru.raperan.abstracttaskexecutorservice.masterservice.dto.TaskApiDto;
 import ru.raperan.abstracttaskexecutorservice.masterservice.entity.Step;
 import ru.raperan.abstracttaskexecutorservice.masterservice.entity.Task;
@@ -54,12 +55,15 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskApiDto restartTask(UUID id) {
         Task task = taskRepository.findById(id).orElseThrow(TaskNotFoundException::new);
+        List<Step> steps = task.getSteps().stream().filter(item -> item.getStepId().getStatus() == Status.PENDING).toList();
         Task newTask = Task.builder()
                 .ttl(task.getTtl())
-                .steps(copySteps(task.getSteps()))
                 .parentTask(task)
+                .steps(steps)
                 .build();
-        newTask.addSteps(newTask.getSteps());
+
+        newTask.addSteps(steps);
+
         Task savedTask = taskRepository.save(newTask);
         addTaskSender.send(taskMapper.mapEntityToDto(savedTask));
         return taskMapper.mapEntityToApiDto(savedTask);

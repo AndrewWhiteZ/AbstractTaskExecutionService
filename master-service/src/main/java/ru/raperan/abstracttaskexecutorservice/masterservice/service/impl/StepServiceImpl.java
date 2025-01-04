@@ -24,24 +24,23 @@ public class StepServiceImpl implements StepService {
 
     @Override
     public void updateStatus(StatusUpdateDto dto) {
-//        stepRepository.updateStepStatus(dto.getStatus(), dto.getMessage(), dto.getTaskId(), dto.getStepId());
-
-
+        // stepRepository.updateStepStatus(dto.getStatus(), dto.getMessage(), dto.getTaskId(), dto.getStepId());
 
         stepRepository.save(Step.builder()
-                        .stepId(
-                                StepId.builder()
-                                        .id(dto.getStepId())
-                                        .status(Status.valueOf(dto.getStatus()))
-                                        .build()
-                                )
-                        .name(dto.getName())
-                        .startTime(dto.getStartTime())
-                        .payload(Payload.builder()
-                                .body(dto.getMessage())
-                                .build())
-                        .task(taskRepository.findById(dto.getTaskId()).orElseThrow())
-                .build());
+            .stepId(
+                StepId.builder()
+                    .id(dto.getStepId())
+                    .status(Status.valueOf(dto.getStatus()))
+                .build()
+            )
+            .name(dto.getName())
+            .startTime(dto.getStartTime())
+            .payload(
+                Payload.builder()
+                    .body(dto.getMessage())
+                .build()
+            )
+            .task(taskRepository.findById(dto.getTaskId()).orElseThrow()).build());
     }
 
 }

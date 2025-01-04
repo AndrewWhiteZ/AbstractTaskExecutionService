@@ -49,7 +49,7 @@ public class TaskMapper {
                 .ttl(task.getTtl())
                 .steps(task.getSteps().stream().map(
                         stepMapper::mapEntityToApiDto).collect(Collectors.toList())
-                )
+                ).payload(task.getSteps().getFirst().getPayloadAsString())
                 .build();
     }
 
