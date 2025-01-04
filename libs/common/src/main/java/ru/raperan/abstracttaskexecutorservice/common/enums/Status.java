@@ -5,7 +5,7 @@ public enum Status {
     PENDING,
     PROCESSING,
     FINISHED,
+    ERROR,
     EXPIRED,
-    ERROR
 
 }
